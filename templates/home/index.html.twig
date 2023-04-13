@@ -4,17 +4,17 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    #form { height: 100px, width: 300px, border: 1px solid red }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
 <h3> Formulaire d'authentification </h3> 
 
-<form action="controle/ident.php" method="post">
+<form id="form">
 
-    <input 	name="nom" 	type="text" value= "<?php echo($no); ?>" />       Nom      <br/>
+    <input 	name="nom" 	type="text" />       Nom      <br/>
 			 
-    <input  name="num"  type="text" value= "<?php echo($nu) ?>" />  Matricule    <br/> 
+    <input  name="num"  type="text" />  Matricule    <br/> 
 			 
     <input type= "submit"  value="soumettre">
 </form>
