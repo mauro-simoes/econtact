@@ -13,7 +13,7 @@ class ViewContactsController extends AbstractController
     public function index(): Response
     {
         // Obtenez une instance de la connexion à la base de données
-        $conn = $this->getDoctrine()->getConnection();
+        $conn = $this->$this->getDoctrine()->getConnection();
 
         // Exécutez une requête SELECT pour récupérer toutes les entrées dans la table "contacts"
         $sql = "SELECT * FROM contacts";
