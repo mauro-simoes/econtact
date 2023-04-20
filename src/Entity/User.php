@@ -6,12 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: 'utilisateur')]
 class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id_nom = null;
 
     #[ORM\Column(length: 200)]
     private ?string $nom = null;
@@ -25,12 +26,9 @@ class User
     #[ORM\Column(length: 15)]
     private ?string $num = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
-
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->id_nom;
     }
 
     public function getNom(): ?string
@@ -77,18 +75,6 @@ class User
     public function setNum(string $num): self
     {
         $this->num = $num;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
 
         return $this;
     }

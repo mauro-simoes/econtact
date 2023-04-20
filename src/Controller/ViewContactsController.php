@@ -13,7 +13,7 @@ class ViewContactsController extends AbstractController
     #[Route('/contacts/{idNom}', name: 'contacts')]
     public function index(int $idNom, ContactRepository $contactRepository): Response
     {
-        $contacts = $contactRepository->findByNom($idNom);
+        $contacts = $contactRepository->findBy(array('id_nom' => $idNom));
 
         return $this->render('view_contacts/index.html.twig', [
             'contacts' => $contacts,

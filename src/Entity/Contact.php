@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
  * @ORM\Table(name="contact", schema="econtact")
  */
+#[ORM\Entity(repositoryClass: ContactRepository::class)]
+#[ORM\Table(name: 'contact')]
 class Contact
 {
     /**
@@ -17,12 +19,15 @@ class Contact
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id_contact;
+    #[ORM\Id]
+    #[ORM\Column]
+    private ?int $id_contact;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $id_nom;
+    #[ORM\Column]
+    private ?int $id_nom;
 
     public function getIdContact(): ?int
     {
