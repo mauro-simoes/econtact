@@ -19,4 +19,10 @@ class ViewContactsController extends AbstractController
             'contacts' => $contacts,
         ]);
     }
+    #[Route('/contacts/{idNom}', name: 'contacts')]
+    public function addcontact(int $idNom,ContactRepository $contactRepository): void
+    {
+       
+    }
+    
 }
