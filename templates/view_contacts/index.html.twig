@@ -2,6 +2,33 @@
 
 {% block title %}Contacts{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            font-size: 1.2em;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        th, td {
+            padding: 12px 15px;
+        }
+
+        th {
+            background-color: #17a2b8;
+            color: #fff;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <h1>Contacts</h1>
     <table>
@@ -20,5 +47,6 @@
             {% endfor %}
         </tbody>
     </table>
-    <h3> Ajout d'un contact </h3> 
+    <h3>Ajout d'un contact</h3>
+    {# Ajouter le formulaire d'ajout de contact ici #}
 {% endblock %}
