@@ -8,16 +8,14 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserFormType extends AbstractType
+class UserLoginFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
             ->add('email')
             ->add('num')
-            ->add('Inscription', SubmitType::class);
+            ->add('Connexion', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

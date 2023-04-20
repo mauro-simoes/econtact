@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserFormType;
+use App\Form\UserLoginFormType;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Repository\UserRepository;
@@ -16,22 +17,20 @@ use Symfony\Component\HttpFoundation\Request;
 class HomeController extends AbstractController
 {
     #[Route('/user', name: 'app_home')]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, UserRepository $userRepository): Response
     {
         $user = new User();
 
-        $form = $this->createForm(UserFormType::class, $user);
+        $form = $this->createForm(UserLoginFormType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
             $user = $form->getData();
 
-            $em->persist($user);
-            $em->flush();
+            $user = $userRepository->findOneBy(array('email' => $user->getEmail(), 'num' => $user->getNum()));
 
-            return $this->redirectToRoute('task_success');
+            if ($user != null)
+                return $this->redirectToRoute('contacts', array('idNom' => $user->getId()));
         }
 
         return $this->render('home/index.html.twig', [
