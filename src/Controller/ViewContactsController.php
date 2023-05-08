@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Repository\ContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,8 +20,8 @@ class ViewContactsController extends AbstractController
             'contacts' => $contacts,
         ]);
     }
-    #[Route('/contacts/{idNom}', name: 'contacts')]
-    public function addcontact(int $idNom,ContactRepository $contactRepository): void
+    #[Route('/contacts/{idNom}', name: 'addcontacts')]
+    public function addcontact(int $idNom,Request $request): void
     {
        
     }
