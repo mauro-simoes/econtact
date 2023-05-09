@@ -49,6 +49,11 @@
     </table>
     <h3>Ajout d'un contact</h3> 
     {# Ajouter le formulaire d'ajout de contact ici #}
-    {{ form(contact) }}
+    {{ form_start(formcontact) }}
+    {{ form_widget(formcontact) }}
+    <button type="submit" class="btn btn-primary">Create</button>
+    {{ form_end(formcontact) }}
+
+
 
 {% endblock %}
