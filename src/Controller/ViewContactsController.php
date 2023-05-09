@@ -28,7 +28,7 @@ class ViewContactsController extends AbstractController
         $contact = new Contact();
 
         // Créer le formulaire Symfony pour la classe Contact
-        $form = $this->createForm(ContactType::class, $contact,['form_name' => 'formcontact']);
+        $form = $this->createForm(ContactType::class, $contact);
 
         $form->handleRequest($request);
 
