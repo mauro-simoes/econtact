@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacts{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        #formStyle {
+            margin: 0 auto;
+            font-size: 1.2em;
+            width: 200px;
+            height:400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .row {
+            padding: 12px 15px;
+        }
+
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+            <div id="formStyle">
+                <div class="row">
+                    {{ form_row(form.prenom) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.nom) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.num) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.password) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.Inscription) }}
+                </div>
+            </div>
+    {{ form_end(form) }}
+
+{% endblock %}
