@@ -1,9 +1,7 @@
-{% extends 'base.html.twig' %}
+
 
 {% block title %}Contacts{% endblock %}
-
 {% block stylesheets %}
-    {{ parent() }}
     <style>
         table {
             border-collapse: collapse;
@@ -48,13 +46,9 @@
         </tbody>
     </table>
     <h3>Ajout d'un contact</h3> 
-    {# Ajouter le formulaire d'ajout de contact ici #}
-    {% if form is defined %}
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">Create</button>
-        {{ form_end(form) }}
-    {% endif %}
+    {{ form_start(addform) }}
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(addform) }}
 
 
 {% endblock %}

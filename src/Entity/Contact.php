@@ -5,27 +5,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ContactRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
- * @ORM\Table(name="contact", schema="econtact")
- */
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[ORM\Table(name: 'contact')]
 class Contact
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+ 
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id_contact;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+ 
     #[ORM\Column]
     private ?int $id_nom;
 
