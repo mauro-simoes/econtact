@@ -45,4 +45,11 @@ class Contact
 
         return $this;
     }
+
+    public function setIdContact(int $id_contact): self
+    {
+        $this->id_contact = $id_contact;
+
+        return $this;
+    }
 }

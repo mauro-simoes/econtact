@@ -3,3 +3,8 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+new_contact:
+    path: '/contacts/{idNom}/new'
+    controller: App\Controller\ViewContactsController::newContact
+    
