@@ -32,8 +32,8 @@
     <table>
         <thead>
             <tr>
-                <th>ID Contact</th>
                 <th>ID Nom</th>
+                <th>ID Contact</th>
             </tr>
         </thead>
         <tbody>
@@ -41,6 +41,12 @@
                 <tr>
                     <td>{{ contact.getIdNom() }}</td>
                     <td>{{ contact.getIdContact() }}</td>
+                    <td>
+                    <form action="{{ path('delete_contact', {'id': contact.getIdContact()}) }}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

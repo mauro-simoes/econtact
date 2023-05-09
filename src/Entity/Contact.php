@@ -15,8 +15,8 @@ class Contact
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id_contact;
-
+   
+    private ?int $id_contact = null;
  
     #[ORM\Column]
     private ?int $id_nom;
