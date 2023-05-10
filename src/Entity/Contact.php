@@ -11,13 +11,12 @@ use App\Repository\ContactRepository;
 #[ORM\Table(name: 'contact')]
 class Contact
 {
- 
+
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
-   
-    private ?int $id_contact = null;
- 
+    private ?int $id_contact;
+
+    #[ORM\Id]
     #[ORM\Column]
     private ?int $id_nom;
 

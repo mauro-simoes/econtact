@@ -1,6 +1,3 @@
-
-
-{% block title %}Contacts{% endblock %}
 {% block stylesheets %}
     <style>
         table {
@@ -32,18 +29,23 @@
     <table>
         <thead>
             <tr>
-                <th>ID Nom</th>
                 <th>ID Contact</th>
-                <th>ID Nom</th>
-            </tr>go
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Numero</th>
+            </tr>
         </thead>
         <tbody>
             {% for contact in contacts %}
                 <tr>
-                    <td>{{ contact.getIdNom() }}</td>
-                    <td>{{ contact.getIdContact() }}</td>
+                    <td>{{ contact.getId() }}</td>
+                    <td>{{ contact.getNom() }}</td>
+                    <td>{{ contact.getPrenom() }}</td>
+                    <td>{{ contact.getEmail() }}</td>
+                    <td>{{ contact.getNum() }}</td>
                     <td>
-                    <form action="{{ path('delete_contact', {'id': contact.getIdContact()}) }}" method="post">
+                    <form action="{{ path('delete_contact', {'id': contact.getId()}) }}" method="post">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn btn-danger">Supprimer</button>
                 </form>
@@ -53,5 +55,11 @@
         </tbody>
     </table>
     <h3>Ajout d'un contact</h3>
-    {# Ajouter le formulaire d'ajout de contact ici #}
+    {{ form_start(addform) }}
+    {{ form_end(addform) }}
+    {% if error %}
+        <p style = "color:red">{{error}}</p>
+    {% endif %}
+
+    <a href ={{path("app_logout")}}>Me deconnecter</a>
 {% endblock %}

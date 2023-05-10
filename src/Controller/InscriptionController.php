@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\FormInscription;
 use App\Security\UserAuthenticator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -16,7 +17,6 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class InscriptionController extends AbstractController
 {
-
     #[Route('/inscription', name: 'app_register')]
     public function inscription(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator): Response
     {

@@ -3,67 +3,94 @@
 namespace App\Controller;
 
 use App\Entity\Contact;
-use App\Entity\User;
-use App\Form\ContactType;
+use App\Form\AddContactForm;
 use App\Repository\UserRepository;
 use App\Repository\ContactRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class ViewContactsController extends AbstractController
 {
-    #[Route('/contacts/{idNom}', name: 'contacts')]
-    public function index(int $idNom, ContactRepository $contactRepository): Response
+    #[Route('/contacts', name: 'contacts')]
+    public function index(Request $request, ContactRepository $contactRepository, UserRepository $userRepository): Response
     {
+        $error = null;
         // si un utilisateur n'est pas connecté
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('app_login');
         }
 
         $user = $this->getUser();
-
         $user = $userRepository->findOneBy(array('email' => $user->getUserIdentifier()));
 
-        $contacts = $contactRepository->findBy(array('id_nom' => $user->getId()));
-        $contact = new Contact();
+        $idContacts = $contactRepository->findBy(array('id_nom' => $user->getId()));
+
+        $contacts = [];
+        foreach ($idContacts as $id) {
+            array_push($contacts, $userRepository->findOneBy(array('id_nom' => $id->getIdContact())));
+        }
 
         // Créer le formulaire Symfony pour la classe Contact
-        $addform = $this->createForm(ContactType::class, $contact);
+        $addform = $this->createForm(AddContactForm::class);
 
+        $addform->handleRequest($request);
         if ($addform->isSubmitted() && $addform->isValid()) {
             // Récupérer les données du formulaire
-            $contact = $addform->getData();
+            $resultatFormulaire = $addform->getData();
 
-            // Rechercher l'utilisateur avec l'id_nom correspondant à l'id_contact saisi dans le formulaire
-            $userRepository = $entityManager->getRepository(User::class);
-            $user = $userRepository->findOneBy(['id_nom' => $contact->getIdContact()]);
+            $userAjouter = null;
 
-            if (!$user) {
-                // L'utilisateur n'existe pas, rediriger l'utilisateur vers la page des contacts pour cet id_nom
-                return $this->redirectToRoute('contacts', ['idNom' => $idNom]);
+            if ($resultatFormulaire['email'] != '') {
+                $userAjouter = $userRepository->findOneBy(['email' => $resultatFormulaire['email']]);
+            } else if ($resultatFormulaire['num'] != '') {
+                $userAjouter = $userRepository->findOneBy(['num' => $resultatFormulaire['num']]);
+            } else {
+                $error = "Veuillez rentrer l'email d'un utilisateur ou son numero";
+                return $this->render('view_contacts/index.html.twig', [
+                    'contacts' => $contacts,
+                    'addform' => $addform->createView(),
+                    'error' => $error
+                ]);
             }
 
+            if (!$userAjouter) {
+                // L'utilisateur n'existe pas, rediriger l'utilisateur vers la page des contacts pour cet id_nom
+                $error = "L'utilisateur n'a pas été trouvé";
+                return $this->render('view_contacts/index.html.twig', [
+                    'contacts' => $contacts,
+                    'addform' => $addform->createView(),
+                    'error' => $error
+                ]);
+            }
+
+            $contact = new Contact();
+            $contact->setIdNom($user->getId());
+            $contact->setIdContact($userAjouter->getId());
             // Ajouter le contact à la base de données
-            $contact->setIdNom($idNom);
-            $entityManager->persist($contact);
-            $entityManager->flush();
+            $contactRepository->save($contact, true);
+            return $this->redirectToRoute('contacts');
         }
         return $this->render('view_contacts/index.html.twig', [
             'contacts' => $contacts,
             'addform' => $addform->createView(),
+            'error' => $error
         ]);
     }
-    /**
-     * @Route("/contacts/delete/{id}", name="delete_contact", methods={"DELETE"})
-     */
-    public function delete(Contact $contact, EntityManagerInterface $entityManager): Response
-    {
-        $entityManager->remove($contact);
-        $entityManager->flush();
 
-        return $this->redirectToRoute('contacts', ['idNom' => $contact->getIdNom()]);
+    /**
+     * @Route("/contacts/delete/{id}", name="delete_contact")
+     */
+    public function delete(Int $id, ContactRepository $contactRepository, UserRepository $userRepository): Response
+    {
+        $user = $this->getUser();
+        $user = $userRepository->findOneBy(array('email' => $user->getUserIdentifier()));
+
+        $contact =  $contactRepository->findOneBy(array('id_nom' => $user->getId(), 'id_contact' => $id));
+
+        $contactRepository->remove($contact, true);
+
+        return $this->redirectToRoute('contacts');
     }
 }
