@@ -1,9 +1,7 @@
-{% extends 'base.html.twig' %}
+
 
 {% block title %}Contacts{% endblock %}
-
 {% block stylesheets %}
-    {{ parent() }}
     <style>
         table {
             border-collapse: collapse;
@@ -34,19 +32,26 @@
     <table>
         <thead>
             <tr>
+                <th>ID Nom</th>
                 <th>ID Contact</th>
                 <th>ID Nom</th>
-            </tr>
+            </tr>go
         </thead>
         <tbody>
             {% for contact in contacts %}
                 <tr>
                     <td>{{ contact.getIdNom() }}</td>
                     <td>{{ contact.getIdContact() }}</td>
+                    <td>
+                    <form action="{{ path('delete_contact', {'id': contact.getIdContact()}) }}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <h3>Ajout d'un contact (en cours d'implémentation)</h3>
+    <h3>Ajout d'un contact</h3>
     {# Ajouter le formulaire d'ajout de contact ici #}
 {% endblock %}

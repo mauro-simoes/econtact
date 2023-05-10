@@ -5,27 +5,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ContactRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
- * @ORM\Table(name="contact", schema="econtact")
- */
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[ORM\Table(name: 'contact')]
 class Contact
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+ 
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id_contact;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
+   
+    private ?int $id_contact = null;
+ 
     #[ORM\Column]
     private ?int $id_nom;
 
@@ -42,6 +34,13 @@ class Contact
     public function setIdNom(int $id_nom): self
     {
         $this->id_nom = $id_nom;
+
+        return $this;
+    }
+
+    public function setIdContact(int $id_contact): self
+    {
+        $this->id_contact = $id_contact;
 
         return $this;
     }
